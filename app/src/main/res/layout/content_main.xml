@@ -15,11 +15,11 @@
         android:layout_height="wrap_content">
 
 
-        <TextView
+        <EditText
+            android:id="@+id/totalEquation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="40dp"
-            android:text="300-"
             android:textColor="#B4B1BA"
             android:gravity="right"
             android:background="#ffffff"
@@ -39,15 +39,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="90dp"
-        android:text="152"
-        android:textColor="#565151"
-        android:gravity="right"
-        android:background="#ffffff"
-        android:layout_weight="0.1"/>
+
+        <EditText
+            android:id="@+id/input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:background="#ffffff"
+            android:gravity="right"
+            android:textColor="#565151"
+            android:textSize="90dp"
+            android:layout_weight="0.1"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -73,6 +75,7 @@
         >
 
         <Button
+            android:id="@+id/btnleftbrace"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -83,6 +86,7 @@
             android:gravity="center"/>
 
         <Button
+            android:id="@+id/btnrightbrace"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -93,6 +97,7 @@
             android:gravity="center" />
 
         <Button
+            android:id="@+id/btndivide"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -103,6 +108,7 @@
             android:gravity="center"/>
 
         <Button
+            android:id="@+id/btnmultiply"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -113,6 +119,7 @@
             android:gravity="center"/>
 
         <Button
+            android:id="@+id/btnadd"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -123,6 +130,7 @@
             android:gravity="center"/>
 
         <Button
+            android:id="@+id/btnsubtract"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -142,6 +150,7 @@
         android:weightSum="3" >
 
         <Button
+            android:id="@+id/btn7"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -152,6 +161,7 @@
             android:gravity="center"/>
 
         <Button
+            android:id="@+id/btn8"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -162,6 +172,7 @@
             android:gravity="center"/>
 
         <Button
+            android:id="@+id/btn9"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -181,6 +192,7 @@
         android:weightSum="3" >
 
         <Button
+            android:id="@+id/btn4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -191,6 +203,7 @@
             android:gravity="center"/>
 
         <Button
+            android:id="@+id/btn5"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -201,6 +214,7 @@
             android:gravity="center"/>
 
         <Button
+            android:id="@+id/btn6"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -220,6 +234,7 @@
         android:weightSum="3">
 
         <Button
+            android:id="@+id/btn1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -230,6 +245,7 @@
             android:gravity="center"/>
 
         <Button
+            android:id="@+id/btn2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -240,6 +256,7 @@
             android:gravity="center"/>
 
         <Button
+            android:id="@+id/btn3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -259,6 +276,7 @@
         android:weightSum="3">
 
         <Button
+            android:id="@+id/btnbackspace"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -269,6 +287,7 @@
             android:gravity="center"/>
 
         <Button
+            android:id="@+id/btn0"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -279,6 +298,7 @@
             android:gravity="center"/>
 
         <Button
+            android:id="@+id/btnenter"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
