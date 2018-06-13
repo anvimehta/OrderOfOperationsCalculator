@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,154 +18,115 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.totalEquation)
     EditText totalEquation;
 
+    String equation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        equation=input.getText().toString().trim();
+
     }
 
     @OnClick(R.id.btnleftbrace)
     public void leftBraceClick() {
-        Toast.makeText(getApplicationContext(), "You have entered: " + input.getText().toString(),
-                Toast.LENGTH_SHORT).show();
-        String equation=input.getText().toString().trim();
-        input.setText(equation+"(");
+        input.append("(");
     }
 
     @OnClick(R.id.btnrightbrace)
     public void rightBraceClick() {
-        Toast.makeText(getApplicationContext(), "You have entered: " + input.getText().toString(),
-                Toast.LENGTH_SHORT).show();
-        String equation=input.getText().toString().trim();
-        input.setText(equation+")");
+        input.append(")");
     }
 
     @OnClick(R.id.btndivide)
     public void divideClick() {
-        Toast.makeText(getApplicationContext(), "You have entered: " + input.getText().toString(),
-                Toast.LENGTH_SHORT).show();
-        String equation=input.getText().toString().trim();
-        input.setText(equation+"/");
+        input.append("/");
     }
 
     @OnClick(R.id.btnmultiply)
     public void multiplyClick() {
-        Toast.makeText(getApplicationContext(), "You have entered: " + input.getText().toString(),
-                Toast.LENGTH_SHORT).show();
-        String equation=input.getText().toString().trim();
-        input.setText(equation+"*");
+        input.append("*");
     }
 
     @OnClick(R.id.btnadd)
     public void subtractClick() {
-        Toast.makeText(getApplicationContext(), "You have entered: " + input.getText().toString(),
-                Toast.LENGTH_SHORT).show();
-        String equation=input.getText().toString().trim();
-        input.setText(equation+"+");
+        input.append("+");
     }
 
     @OnClick(R.id.btnsubtract)
     public void addClick() {
-        Toast.makeText(getApplicationContext(), "You have entered: " + input.getText().toString(),
-                Toast.LENGTH_SHORT).show();
-        String equation=input.getText().toString().trim();
-        input.setText(equation+"-");
+        input.append("-");
     }
 
     @OnClick(R.id.btn1)
     public void oneClick() {
-        Toast.makeText(getApplicationContext(), "You have entered: " + input.getText().toString(),
-                Toast.LENGTH_SHORT).show();
-        String equation=input.getText().toString().trim();
-        input.setText(equation+"1");
+        input.append("1");
     }
 
     @OnClick(R.id.btn2)
     public void twoClick() {
-        Toast.makeText(getApplicationContext(), "You have entered: " + input.getText().toString(),
-                Toast.LENGTH_SHORT).show();
-        String equation=input.getText().toString().trim();
-        input.setText(equation+"2");
+        input.append("2");
     }
 
     @OnClick(R.id.btn3)
     public void threeClick() {
-        Toast.makeText(getApplicationContext(), "You have entered: " + input.getText().toString(),
-                Toast.LENGTH_SHORT).show();
-        String equation=input.getText().toString().trim();
-        input.setText(equation+"3");
+        input.append("3");
     }
 
     @OnClick(R.id.btn4)
     public void fourClick() {
-        Toast.makeText(getApplicationContext(), "You have entered: " + input.getText().toString(),
-                Toast.LENGTH_SHORT).show();
-        String equation=input.getText().toString().trim();
-        input.setText(equation+"4");
+        input.append("4");
     }
 
     @OnClick(R.id.btn5)
     public void fiveClick() {
-        Toast.makeText(getApplicationContext(), "You have entered: " + input.getText().toString(),
-                Toast.LENGTH_SHORT).show();
-        String equation=input.getText().toString().trim();
-        input.setText(equation+"5");
+        input.append("5");
     }
 
     @OnClick(R.id.btn6)
     public void sixClick() {
-        Toast.makeText(getApplicationContext(), "You have entered: " + input.getText().toString(),
-                Toast.LENGTH_SHORT).show();
-        String equation=input.getText().toString().trim();
-        input.setText(equation+"6");
+        input.append("6");
     }
 
     @OnClick(R.id.btn7)
     public void sevenClick() {
-        Toast.makeText(getApplicationContext(), "You have entered: " + input.getText().toString(),
-                Toast.LENGTH_SHORT).show();
-        String equation=input.getText().toString().trim();
-        input.setText(equation+"7");
+        input.append("7");
     }
 
     @OnClick(R.id.btn8)
     public void eightClick() {
-        Toast.makeText(getApplicationContext(), "You have entered: " + input.getText().toString(),
-                Toast.LENGTH_SHORT).show();
-        String equation=input.getText().toString().trim();
-        input.setText(equation+"8");
+        input.append("8");
     }
 
     @OnClick(R.id.btn9)
     public void nineClick() {
-        Toast.makeText(getApplicationContext(), "You have entered: " + input.getText().toString(),
-                Toast.LENGTH_SHORT).show();
-        String equation=input.getText().toString().trim();
-        input.setText(equation+"9");
+        input.append("9");
     }
 
     @OnClick(R.id.btn0)
     public void zeroClick() {
-        Toast.makeText(getApplicationContext(), "You have entered: " + input.getText().toString(),
-                Toast.LENGTH_SHORT).show();
-        String equation=input.getText().toString().trim();
-        input.setText(equation+"0");
+        input.append("0");
     }
 
     @OnClick(R.id.backspaceFab)
     public void backspaceFabClick() {
-        Toast.makeText(getApplicationContext(), "You have entered: " + input.getText().toString(),
-                Toast.LENGTH_SHORT).show();
-        String equation=input.getText().toString().trim();
-        int equationLength = equation.length();
-        String newEquation = equation.substring(0, equationLength-1);
-        input.setText(newEquation);
+        equation=input.getText().toString().trim();
+        int equationLength=equation.length();
+        if(equationLength==0){
+            input.setText("");
+            input.append("0");
+        }else {
+            String newEquation = equation.substring(0, equationLength - 1);
+            equation = newEquation;
+            input.setText("");
+            input.append(equation);
+        }
     }
 
     @OnClick(R.id.equalFab)
     public void equalFabClick() {
-        String equation=input.getText().toString().trim();
+        equation=input.getText().toString().trim();
         String totalEq = equation;
         equation = "";
         input.setText(equation);
