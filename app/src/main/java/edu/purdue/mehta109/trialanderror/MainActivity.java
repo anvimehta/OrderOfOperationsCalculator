@@ -9,6 +9,7 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -113,15 +114,28 @@ public class MainActivity extends AppCompatActivity {
     public void backspaceFabClick() {
         equation=input.getText().toString().trim();
         int equationLength=equation.length();
-        if(equationLength==0){
+        if(equationLength<=1){
             input.setText("");
             input.append("0");
         }else {
-            String newEquation = equation.substring(0, equationLength - 1);
-            equation = newEquation;
-            input.setText("");
-            input.append(equation);
+            if(equation.equals("0")){
+                input.setText("");
+                input.append("0");
+            }else {
+                String newEquation = equation.substring(0, equationLength - 1);
+                equation = newEquation;
+                input.setText("");
+                input.append(equation);
+            }
         }
+    }
+
+    @OnLongClick(R.id.backspaceFab)
+    public boolean longBackspaceFabClick(){
+        equation=input.getText().toString().trim();
+        equation="";
+        input.setText(equation);
+        return true;
     }
 
     @OnClick(R.id.equalFab)
