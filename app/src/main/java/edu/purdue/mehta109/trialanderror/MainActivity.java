@@ -19,94 +19,237 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.totalEquation)
     EditText totalEquation;
 
-    String equation;
+    public static String equation;
+
+    public static int flagVariable=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        equation=input.getText().toString().trim();
-
+        equation = input.getText().toString().trim();
     }
 
     @OnClick(R.id.btnleftbrace)
     public void leftBraceClick() {
+        if(flagVariable==1){
+            flagVariable=0;
+        }
+        if(input.getText().toString().trim().equals("0")){
+            input.setText("");
+            equation=input.getText().toString().trim();
+        }
         input.append("(");
     }
 
     @OnClick(R.id.btnrightbrace)
     public void rightBraceClick() {
+        if(flagVariable==1){
+            flagVariable=0;
+        }
+        if(input.getText().toString().trim().equals("0")){
+            input.setText("");
+            equation=input.getText().toString().trim();
+        }
         input.append(")");
     }
 
     @OnClick(R.id.btndivide)
     public void divideClick() {
+        if(flagVariable==1){
+            flagVariable=0;
+        }
+        if(input.getText().toString().trim().equals("0")){
+            input.setText("");
+            equation=input.getText().toString().trim();
+        }
         input.append("/");
     }
 
     @OnClick(R.id.btnmultiply)
     public void multiplyClick() {
+        if(flagVariable==1){
+            flagVariable=0;
+        }
+        if(input.getText().toString().trim().equals("0")){
+            input.setText("");
+            equation=input.getText().toString().trim();
+        }
         input.append("*");
     }
 
     @OnClick(R.id.btnadd)
     public void subtractClick() {
+        if(flagVariable==1){
+            flagVariable=0;
+        }
+        if(input.getText().toString().trim().equals("0")){
+            input.setText("");
+            equation=input.getText().toString().trim();
+        }
         input.append("+");
     }
 
     @OnClick(R.id.btnsubtract)
     public void addClick() {
+        if(flagVariable==1){
+            flagVariable=0;
+        }
+        if(input.getText().toString().trim().equals("0")){
+            input.setText("");
+            equation=input.getText().toString().trim();
+        }
         input.append("-");
     }
 
     @OnClick(R.id.btn1)
     public void oneClick() {
+        if(flagVariable==1){
+            equation=input.getText().toString().trim();
+            equation="";
+            input.setText(equation);
+            flagVariable=0;
+        }
+        if(input.getText().toString().trim().equals("0")){
+            input.setText("");
+            equation=input.getText().toString().trim();
+        }
         input.append("1");
     }
 
     @OnClick(R.id.btn2)
     public void twoClick() {
+        if(flagVariable==1){
+            equation=input.getText().toString().trim();
+            equation="";
+            input.setText(equation);
+            flagVariable=0;
+        }
+        if(input.getText().toString().trim().equals("0")){
+            input.setText("");
+            equation=input.getText().toString().trim();
+        }
         input.append("2");
     }
 
     @OnClick(R.id.btn3)
     public void threeClick() {
+        if(flagVariable==1){
+            equation=input.getText().toString().trim();
+            equation="";
+            input.setText(equation);
+            flagVariable=0;
+        }
+        if(input.getText().toString().trim().equals("0")){
+            input.setText("");
+            equation=input.getText().toString().trim();
+        }
         input.append("3");
     }
 
     @OnClick(R.id.btn4)
     public void fourClick() {
+        if(flagVariable==1){
+            equation=input.getText().toString().trim();
+            equation="";
+            input.setText(equation);
+            flagVariable=0;
+        }
+        if(input.getText().toString().trim().equals("0")){
+            input.setText("");
+            equation=input.getText().toString().trim();
+        }
         input.append("4");
     }
 
     @OnClick(R.id.btn5)
     public void fiveClick() {
+        if(flagVariable==1){
+            equation=input.getText().toString().trim();
+            equation="";
+            input.setText(equation);
+            flagVariable=0;
+        }
+        if(input.getText().toString().trim().equals("0")){
+            input.setText("");
+            equation=input.getText().toString().trim();
+        }
         input.append("5");
     }
 
     @OnClick(R.id.btn6)
     public void sixClick() {
+        if(flagVariable==1){
+            equation=input.getText().toString().trim();
+            equation="";
+            input.setText(equation);
+            flagVariable=0;
+        }
+        if(input.getText().toString().trim().equals("0")){
+            input.setText("");
+            equation=input.getText().toString().trim();
+        }
         input.append("6");
     }
 
     @OnClick(R.id.btn7)
     public void sevenClick() {
+        if(flagVariable==1){
+            equation=input.getText().toString().trim();
+            equation="";
+            input.setText(equation);
+            flagVariable=0;
+        }
+        if(input.getText().toString().trim().equals("0")){
+            input.setText("");
+            equation=input.getText().toString().trim();
+        }
         input.append("7");
     }
 
     @OnClick(R.id.btn8)
     public void eightClick() {
+        if(flagVariable==1){
+            equation=input.getText().toString().trim();
+            equation="";
+            input.setText(equation);
+            flagVariable=0;
+        }
+        if(input.getText().toString().trim().equals("0")){
+            input.setText("");
+            equation=input.getText().toString().trim();
+        }
         input.append("8");
     }
 
     @OnClick(R.id.btn9)
     public void nineClick() {
+        if(flagVariable==1){
+            equation=input.getText().toString().trim();
+            equation="";
+            input.setText(equation);
+            flagVariable=0;
+        }
+        if(input.getText().toString().trim().equals("0")){
+            input.setText("");
+            equation=input.getText().toString().trim();
+        }
         input.append("9");
     }
 
     @OnClick(R.id.btn0)
     public void zeroClick() {
+        if(flagVariable==1){
+            equation=input.getText().toString().trim();
+            equation="";
+            input.setText(equation);
+            flagVariable=0;
+        }
+        if(input.getText().toString().trim().equals("0")){
+            input.setText("");
+            equation=input.getText().toString().trim();
+        }
         input.append("0");
     }
 
@@ -142,8 +285,10 @@ public class MainActivity extends AppCompatActivity {
     public void equalFabClick() {
         equation=input.getText().toString().trim();
         String totalEq = equation;
-        equation = "";
-        input.setText(equation);
+        equation = Calculator.total();
+        flagVariable=1;
+        input.setText("");
+        input.append(equation);
         totalEquation.setText(totalEq);
     }
 
