@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -14,14 +15,14 @@ import butterknife.OnLongClick;
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.input)
-    EditText input;
+    protected EditText input;
 
     @BindView(R.id.totalEquation)
-    EditText totalEquation;
+    protected EditText totalEquation;
 
-    public static String equation;
+    private String equation;
 
-    public static int flagVariable=0;
+    private int flagVariable=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +60,6 @@ public class MainActivity extends AppCompatActivity {
     public void divideClick() {
         if(flagVariable==1){
             flagVariable=0;
-        }
-        if(input.getText().toString().trim().equals("0")){
-            input.setText("");
-            equation=input.getText().toString().trim();
         }
         input.append("/");
     }
@@ -252,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
         }
         input.append("0");
     }
-
+/*
     @OnClick(R.id.backspaceFab)
     public void backspaceFabClick() {
         equation=input.getText().toString().trim();
@@ -280,16 +277,69 @@ public class MainActivity extends AppCompatActivity {
         input.setText(equation);
         return true;
     }
+*/
+
+    @OnClick(R.id.btnbackspace)
+    public void backspaceClick() {
+        equation=input.getText().toString().trim();
+        int equationLength=equation.length();
+        if(equationLength<=1){
+            input.setText("");
+            input.append("0");
+        }else {
+            if(equation.equals("0")){
+                input.setText("");
+                input.append("0");
+            }else {
+                if(flagVariable==1){
+                    equation=input.getText().toString().trim();
+                    equation="";
+                    input.setText(equation);
+                }else {
+                    String newEquation = equation.substring(0, equationLength - 1);
+                    equation = newEquation;
+                    input.setText("");
+                    input.append(equation);
+                }
+            }
+        }
+    }
+
+    @OnLongClick(R.id.btnbackspace)
+    public boolean longBackspaceClick(){
+        equation=input.getText().toString().trim();
+        equation="";
+        input.setText(equation);
+        return true;
+    }
 
     @OnClick(R.id.equalFab)
     public void equalFabClick() {
         equation=input.getText().toString().trim();
-        String totalEq = equation;
-        equation = Calculator.total();
-        flagVariable=1;
-        input.setText("");
-        input.append(equation);
-        totalEquation.setText(totalEq);
+        int counterLeftBrace = 0;
+        for( int i=0; i<equation.length(); i++ ) {
+            if( equation.charAt(i) == '(' ) {
+                counterLeftBrace++;
+            }
+        }
+        int counterRightBrace = 0;
+        for( int i=0; i<equation.length(); i++ ) {
+            if( equation.charAt(i) == ')' ) {
+                counterRightBrace++;
+            }
+        }
+        if(counterRightBrace!=counterLeftBrace){
+            Toast toast = Toast.makeText(getApplicationContext(), "Please enter correct brace formatting.", Toast.LENGTH_LONG);
+            toast.show();
+
+        }else {
+            String totalEq = equation;
+            equation = Calculator.total(equation);
+            flagVariable = 1;
+            input.setText("");
+            input.append(equation);
+            totalEquation.setText(totalEq);
+        }
     }
 
 /*

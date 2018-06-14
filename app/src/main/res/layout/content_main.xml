@@ -289,6 +289,7 @@
             android:background="#393535"
             android:textColor="#9C9794"
             android:textSize="35dp"
+            android:text="b"
             android:gravity="center"/>
 
         <Button

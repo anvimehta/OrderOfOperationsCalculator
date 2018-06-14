@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Calculator {
     public static int flag;
     public static String finalValueString;
+    public static boolean flagValue=false;
     public static String evaluate(String expression) {
         char[] array = expression.toCharArray();
         Stack<Integer> values = new Stack<Integer>();
@@ -58,10 +59,10 @@ public class Calculator {
             case '/':
                 if(a == 0 && b == 0) {
                     flag = 1;
-                    System.out.println("Result    \t:\tError");
+                    //System.out.println("Result    \t:\tError");
                 }else if(a != 0 && b == 0){
-                    flag = 1;
-                    System.out.println("Result    \t:\t∞");
+                    flag = 2;
+                    //System.out.println("Result    \t:\t∞");
                 } else{
                     return a / b;
                 }
@@ -118,14 +119,20 @@ public class Calculator {
         input = input.replaceAll("\\)", " )");
         return input;
     }
-    public static String total(){
+    public static String total(String equation){
         //System.out.println("Welcome to the calculator!");
         int one = 1;
         do {
-            String input = Calculator.bugFix(MainActivity.equation);
+            String input = Calculator.bugFix(equation);
             //System.out.println("Expression\t:\t" + input);
             Calculator.evaluate(input);
-            return finalValueString;
+            if(flag==1) {
+                return "Error";
+            }else if(flag==2){
+                return "∞";
+            }else {
+                return finalValueString;
+            }
         }while (one==1);
     }
 }
