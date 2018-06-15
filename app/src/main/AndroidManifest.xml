@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ViewHistory"
+            android:name=".ViewHistoryActivity"
             android:label="@string/title_activity_view_history"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

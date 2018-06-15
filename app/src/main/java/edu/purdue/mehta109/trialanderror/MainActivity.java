@@ -376,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_view_history) {
-            startActivity(new Intent(MainActivity.this, ViewHistory.class));
+            startActivity(new Intent(MainActivity.this, ViewHistoryActivity.class));
             return true;
         }
 

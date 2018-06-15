@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class ViewHistory extends AppCompatActivity {
+public class ViewHistoryActivity extends AppCompatActivity {
 
     private Realm realm;
 
