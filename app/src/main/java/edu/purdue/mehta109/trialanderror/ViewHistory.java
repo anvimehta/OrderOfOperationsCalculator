@@ -4,13 +4,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class ViewHistory extends AppCompatActivity {
 
-    Realm realm;
+    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,12 +19,25 @@ public class ViewHistory extends AppCompatActivity {
         setContentView(R.layout.activity_view_history);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        realm = Realm.getDefaultInstance();
+        fetchHistoryFromRealm();
+    }
 
-        final RealmResults<EquationID> eqAndAns = realm.where(EquationID.class).findAll();
-        for(int i=0; i<eqAndAns.size(); i++){
-            Log.v("output", ":"+eqAndAns.get(i).getEquation());
-            Log.v("answer", ":"+eqAndAns.get(i).getAnswer());
+    private void fetchHistoryFromRealm() {
+        RealmResults<EquationID> eqAndAns = realm.where(EquationID.class).findAll();
+        for (int i = 0; i < eqAndAns.size(); i++) {
+            Log.v("output", ":" + eqAndAns.get(i).getEquation());
+            Log.v("answer", ":" + eqAndAns.get(i).getAnswer());
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
