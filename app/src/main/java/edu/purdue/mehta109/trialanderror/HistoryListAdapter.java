@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-public class CardAdapter {
+public class HistoryListAdapter {
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView equation;
