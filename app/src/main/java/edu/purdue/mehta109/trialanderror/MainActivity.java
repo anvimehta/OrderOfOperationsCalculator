@@ -322,9 +322,9 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void execute(Realm realm) {
                     // Add a person
-                    EquationID equationID = realm.createObject(EquationID.class);
-                    equationID.setEquation(totalEq);
-                    equationID.setAnswer(equation);
+                    EquationModel equationModel = realm.createObject(EquationModel.class);
+                    equationModel.setEquation(totalEq);
+                    equationModel.setAnswer(equation);
                 }
             });
             flagVariable = 1;
@@ -332,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
             input.append(equation);
             totalEquation.setText(totalEq);
 
-            final RealmResults<EquationID> equationsAndAnswers = realm.where(EquationID.class).findAll();
+            final RealmResults<EquationModel> equationsAndAnswers = realm.where(EquationModel.class).findAll();
             for(int i=0; i<equationsAndAnswers.size(); i++){
                 System.out.println("Output: "+equationsAndAnswers.get(i).getEquation());
 //                Log.v("output", ":"+equationsAndAnswers.get(i).getEquation());

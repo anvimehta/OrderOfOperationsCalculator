@@ -25,7 +25,7 @@ public class ViewHistory extends AppCompatActivity {
     }
 
     private void fetchHistoryFromRealm() {
-        RealmResults<EquationID> eqAndAns = realm.where(EquationID.class).findAll();
+        RealmResults<EquationModel> eqAndAns = realm.where(EquationModel.class).findAll();
         for (int i = 0; i < eqAndAns.size(); i++) {
             Log.v("output", ":" + eqAndAns.get(i).getEquation());
             Log.v("answer", ":" + eqAndAns.get(i).getAnswer());
