@@ -1,21 +1,58 @@
 package edu.purdue.mehta109.trialanderror;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class HistoryListAdapter {
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+import java.util.List;
 
-        TextView equation;
-        TextView answer;
-        TextView ID;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.MyViewHolder> {
+
+    private List<EquationModel> mEquationModelList;
+
+    public HistoryListAdapter(List<EquationModel> mEquationModelList) {
+        this.mEquationModelList = mEquationModelList;
+    }
+
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_history, parent, false);
+        return new MyViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        if (mEquationModelList.size() > 0) {
+            holder.mTextViewId.setText(mEquationModelList.get(position).getNumberID() + "");
+            holder.mTextViewEquation.setText(mEquationModelList.get(position).getEquation());
+            holder.mTextViewAnswer.setText(mEquationModelList.get(position).getAnswer());
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return mEquationModelList.size();
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.equationID)
+        protected TextView mTextViewId;
+
+        @BindView(R.id.equation)
+        protected TextView mTextViewEquation;
+
+        @BindView(R.id.answer)
+        protected TextView mTextViewAnswer;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            this.equation = (TextView) itemView.findViewById(R.id.equation);
-            this.answer = (TextView) itemView.findViewById(R.id.answer);
-            this.ID = (TextView) itemView.findViewById(R.id.equationID);
+            ButterKnife.bind(this, itemView);
         }
     }
 }
