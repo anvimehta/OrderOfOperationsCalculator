@@ -1,7 +1,9 @@
 package edu.purdue.mehta109.trialanderror;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -11,6 +13,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,13 +28,20 @@ public class MainActivity extends AppCompatActivity {
 
     private int flagVariable=0;
 
+    private Realm realm;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         equation = input.getText().toString().trim();
+        realm = Realm.getDefaultInstance();
+        Toolbar mToolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
     }
+
 
     @OnClick(R.id.btnleftbrace)
     public void leftBraceClick() {
@@ -249,35 +260,6 @@ public class MainActivity extends AppCompatActivity {
         }
         input.append("0");
     }
-/*
-    @OnClick(R.id.backspaceFab)
-    public void backspaceFabClick() {
-        equation=input.getText().toString().trim();
-        int equationLength=equation.length();
-        if(equationLength<=1){
-            input.setText("");
-            input.append("0");
-        }else {
-            if(equation.equals("0")){
-                input.setText("");
-                input.append("0");
-            }else {
-                String newEquation = equation.substring(0, equationLength - 1);
-                equation = newEquation;
-                input.setText("");
-                input.append(equation);
-            }
-        }
-    }
-
-    @OnLongClick(R.id.backspaceFab)
-    public boolean longBackspaceFabClick(){
-        equation=input.getText().toString().trim();
-        equation="";
-        input.setText(equation);
-        return true;
-    }
-*/
 
     @OnClick(R.id.btnbackspace)
     public void backspaceClick() {
@@ -316,6 +298,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.equalFab)
     public void equalFabClick() {
         equation=input.getText().toString().trim();
+        //Check to see if right braces are closed
         int counterLeftBrace = 0;
         for( int i=0; i<equation.length(); i++ ) {
             if( equation.charAt(i) == '(' ) {
@@ -333,12 +316,29 @@ public class MainActivity extends AppCompatActivity {
             toast.show();
 
         }else {
-            String totalEq = equation;
+            final String totalEq = equation;
             equation = Calculator.total(equation);
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    // Add a person
+                    EquationID equationID = realm.createObject(EquationID.class);
+                    equationID.setEquation(totalEq);
+                    equationID.setAnswer(equation);
+                }
+            });
             flagVariable = 1;
             input.setText("");
             input.append(equation);
             totalEquation.setText(totalEq);
+
+            final RealmResults<EquationID> equationsAndAnswers = realm.where(EquationID.class).findAll();
+            for(int i=0; i<equationsAndAnswers.size(); i++){
+                System.out.println("Output: "+equationsAndAnswers.get(i).getEquation());
+//                Log.v("output", ":"+equationsAndAnswers.get(i).getEquation());
+
+            }
+
         }
     }
 
@@ -375,7 +375,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_view_history) {
+            startActivity(new Intent(MainActivity.this, ViewHistory.class));
             return true;
         }
 
