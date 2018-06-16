@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#2FB7DD"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -19,17 +34,12 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:textSize="35dp"
+            android:paddingRight="20dp"
             android:textColor="#B4B1BA"
             android:gravity="right"
             android:background="#ffffff"
-            android:layout_weight="0.1"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ffffff"
-            android:layout_weight="1.9"/>
-
+            android:layout_weight="0.1"
+            android:padding="20dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -48,16 +58,10 @@
             android:gravity="right"
             android:textColor="#565151"
             android:textSize="70dp"
+            android:paddingRight="20dp"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:layout_weight="0.1"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ffffff"
-            android:layout_weight="1.9"/>
-
     </LinearLayout>
 
     <LinearLayout
