@@ -14,7 +14,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private int flagVariable=0;
 
     private Realm realm;
+
+    protected long idValue = 0;
 
 
     @Override
@@ -321,45 +322,20 @@ public class MainActivity extends AppCompatActivity {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    // Add a person
                     EquationModel equationModel = realm.createObject(EquationModel.class);
                     equationModel.setEquation(totalEq);
                     equationModel.setAnswer(equation);
+                    idValue++;
+                    equationModel.setNumberID(idValue);
                 }
             });
             flagVariable = 1;
             input.setText("");
             input.append(equation);
             totalEquation.setText(totalEq);
-
-            final RealmResults<EquationModel> equationsAndAnswers = realm.where(EquationModel.class).findAll();
-            for(int i=0; i<equationsAndAnswers.size(); i++){
-                System.out.println("Output: "+equationsAndAnswers.get(i).getEquation());
-//                Log.v("output", ":"+equationsAndAnswers.get(i).getEquation());
-
-            }
-
         }
     }
 
-/*
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
-*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

@@ -12,7 +12,7 @@ public class EquationModel extends RealmObject{
         return numberID;
     }
 
-    public void setNumberID(int numberID) {
+    public void setNumberID(long numberID) {
         this.numberID = numberID;
     }
 
