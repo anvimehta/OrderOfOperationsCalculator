@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,9 +27,6 @@ public class MainActivity extends AppCompatActivity {
     private int flagVariable=0;
 
     private Realm realm;
-
-    protected long idValue = 0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -293,6 +289,7 @@ public class MainActivity extends AppCompatActivity {
         equation=input.getText().toString().trim();
         equation="";
         input.setText(equation);
+        input.append("0");
         return true;
     }
 
@@ -325,8 +322,7 @@ public class MainActivity extends AppCompatActivity {
                     EquationModel equationModel = realm.createObject(EquationModel.class);
                     equationModel.setEquation(totalEq);
                     equationModel.setAnswer(equation);
-                    idValue++;
-                    equationModel.setNumberID(idValue);
+                    equationModel.setNumberID(equationModel.getNumberID()+1);
                 }
             });
             flagVariable = 1;
