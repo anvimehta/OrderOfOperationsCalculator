@@ -2,7 +2,7 @@ package edu.purdue.mehta109.trialanderror;
 
 import io.realm.RealmObject;
 
-public class EquationModel extends RealmObject{
+public class EquationModel extends RealmObject implements AbstractEquationModel{
 
     private long numberID;
     private String eq;
@@ -13,7 +13,7 @@ public class EquationModel extends RealmObject{
     }
 
     public void setNumberID(long numberID) {
-        this.numberID = numberID;
+        this.numberID=numberID;
     }
 
     public String getEquation(){
@@ -30,5 +30,10 @@ public class EquationModel extends RealmObject{
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    @Override
+    public void saveLocally() {
+
     }
 }

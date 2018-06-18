@@ -1,13 +1,19 @@
 package edu.purdue.mehta109.trialanderror;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,6 +34,14 @@ public class MainActivity extends AppCompatActivity {
 
     private Realm realm;
 
+    List<EquationModel> list;
+
+    public static final String myPrefs = "myPrefs" ;
+    public static final String mEquation = "equationKey";
+    public static final String mAnswer = "answerKey";
+    SharedPreferences sharedpreferences;
+    SharedPreferences.Editor sharedPreferenceEditor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
         Toolbar mToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        sharedpreferences = getSharedPreferences(myPrefs, Context.MODE_PRIVATE);
+        sharedPreferenceEditor = sharedpreferences.edit();
     }
 
 
@@ -294,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.equalFab)
-    public void equalFabClick() {
+    public void equalFabClick(){// throws JSONException {
         equation=input.getText().toString().trim();
         //Check to see if right braces are closed
         int counterLeftBrace = 0;
@@ -314,23 +330,117 @@ public class MainActivity extends AppCompatActivity {
             toast.show();
 
         }else {
-            final String totalEq = equation;
-            equation = Calculator.total(equation);
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    EquationModel equationModel = realm.createObject(EquationModel.class);
-                    equationModel.setEquation(totalEq);
-                    equationModel.setAnswer(equation);
-                    equationModel.setNumberID(equationModel.getNumberID()+1);
-                }
-            });
-            flagVariable = 1;
-            input.setText("");
-            input.append(equation);
-            totalEquation.setText(totalEq);
+            if(equation.endsWith("+")||equation.endsWith("-")||equation.endsWith("*")||equation.endsWith("/")){
+                Toast toast = Toast.makeText(getApplicationContext(), "Please add a value after the symbol.", Toast.LENGTH_LONG);
+                toast.show();
+            }else {
+                final String totalEq = equation;
+                equation = Calculator.total(equation);
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        AbstractEquationModel equationModel = realm.createObject(EquationModel.class);
+                        equationModel.setEquation(totalEq);
+                        equationModel.setAnswer(equation);
+                        equationModel.setNumberID(equationModel.getNumberID() + 1);
+                    }
+                });
+
+                /*
+                EquationModel equationModel = new EquationModel();
+                equationModel.setEquation(totalEq);
+                equationModel.setAnswer(equation);
+                equationModel.setNumberID(equationModel.getNumberID() + 1);
+                JSONObject jEquations = new JSONObject(equationModel.toString());
+                JSONObject jAnswers = new JSONObject(equation);
+*/
+                sharedPreferenceEditor.putString(mEquation, totalEq);
+                sharedPreferenceEditor.putString(mAnswer, equation);
+                sharedPreferenceEditor.commit();
+                readSharedPreferences();
+
+                flagVariable = 1;
+                input.setText("");
+                input.append(equation);
+                totalEquation.setText(totalEq);
+            }
         }
     }
+/*
+    public void saveValues(Context context, List<EquationModel> Equations) {
+        SharedPreferences settings;
+        SharedPreferences.Editor editor;
+
+        settings = context.getSharedPreferences(myPrefs, Context.MODE_PRIVATE);
+        editor = settings.edit();
+
+        Gson gson = new Gson();
+        String equations = gson.toJson(Equations);
+
+        editor.putString(equation, equations);
+        editor.commit();
+    }
+
+    public ArrayList<EquationModel> getFavorites(Context context) {
+        SharedPreferences settings;
+        List<EquationModel> equations;
+
+        settings = context.getSharedPreferences(myPrefs, Context.MODE_PRIVATE);
+
+        if (settings.contains(equation)) {
+            String jsonFavorites = settings.getString(equation, null);
+            Gson gson = new Gson();
+            EquationModel[] favoriteItems = gson.fromJson(jsonFavorites, EquationModel[].class);
+
+            equations = Arrays.asList(favoriteItems);
+            equations = new ArrayList<EquationModel>(equations);
+        } else
+            return null;
+        return (ArrayList<EquationModel>) equations;
+    }
+
+/*
+    AbstractEquationModel abstractEquationModel = null;
+    public ArrayList<AbstractEquationModel> getJson(Context context, String category) {
+
+        String json;
+        JSONArray jPdtArray;
+
+        ArrayList<AbstractEquationModel> allValues = null;
+
+        sharedPreferenceEditor = context.getSharedPreferences(myPrefs, Context.MODE_PRIVATE);
+        json = sharedPreferencesEditor.getString("JSONString", null);
+
+        JSONObject jsonObj = null;
+        try {
+            if (json != null) {
+                jsonObj = new JSONObject(json);
+                jPdtArray = jsonObj.optJSONArray(category);
+                if (jPdtArray != null) {
+                    allValues = new ArrayList<>();
+                    for (int i = 0; i < jPdtArray.length(); i++) {
+                        EquationModel equationModel = new EquationModel();
+                        JSONObject pdtObj = jPdtArray.getJSONObject(i);
+                        abstractEquationModel.setName(pdtObj.getString("name"));
+                        abstractEquationModel.setId(pdtObj
+                                .getInt("id"));
+                        allValues.add(abstractEquationModel);
+                    }
+                }
+            }
+        } catch (JSONException e) {
+        }
+        return allValues;
+    }
+
+*/
+    public void readSharedPreferences(){
+        String shPreEquation = sharedpreferences.getString(mEquation, "");
+        String shPreAnswer = sharedpreferences.getString(mAnswer, "");
+        Log.v("Equation :", shPreEquation);
+        Log.v("Answer   :", shPreAnswer);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -1,5 +1,7 @@
 package edu.purdue.mehta109.trialanderror;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +17,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class ViewHistoryActivity extends AppCompatActivity {
+
 
     @BindView(R.id.recycler_view_history)
     protected RecyclerView mRecyclerViewHistory;
@@ -46,6 +49,8 @@ public class ViewHistoryActivity extends AppCompatActivity {
             setHistoryListAdapter(historyList);
         }
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
