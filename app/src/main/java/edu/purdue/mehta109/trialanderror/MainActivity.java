@@ -215,6 +215,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void noEquation() {
+        if (equation.equals("")){
+            input.append("0");
+        }
+    }
+
     public boolean endWithSymbol(){
         if(equation.endsWith("+")||equation.endsWith("-")||equation.endsWith("*")||equation.endsWith("/")){
             Toast toast = Toast.makeText(getApplicationContext(), "Please add a value after the symbol.", Toast.LENGTH_LONG);
@@ -227,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.equalFab)
     public void equalFabClick() {
-
+        noEquation();
         if (closeBraces() == false && endWithSymbol() == false) {
 
             final String totalEq = equation;
