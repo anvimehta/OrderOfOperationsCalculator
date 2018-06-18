@@ -9,15 +9,22 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
+import edu.purdue.mehta109.trialanderror.Model.AbstractEquationRepository;
+import edu.purdue.mehta109.trialanderror.Model.Realm.EquationModel;
 import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Realm realm;
 
+    private AbstractEquationRepository repository;
     List<EquationModel> list;
 
     public static final String myPrefs = "myPrefs" ;
@@ -53,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         sharedpreferences = getSharedPreferences(myPrefs, Context.MODE_PRIVATE);
         sharedPreferenceEditor = sharedpreferences.edit();
+        repository = RepositoryManager.getEquationRepository();
     }
 
 
@@ -124,8 +133,21 @@ public class MainActivity extends AppCompatActivity {
         input.append("-");
     }
 
-    @OnClick(R.id.btn1)
-    public void oneClick() {
+    @OnClick({R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9})
+    public void oneClick(View view) {
+        int number = -1;
+        int [] numberIds = {R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9};
+        for(int i=0;i<numberIds.length;i++)
+        {
+            if(view.getId() == numberIds[i])
+            {
+                number = i;
+            }
+        }
+        if(number == -1)
+        {
+            throw new RuntimeException("Something went horribly wrong!");
+        }
         if(flagVariable==1){
             equation=input.getText().toString().trim();
             equation="";
@@ -136,167 +158,28 @@ public class MainActivity extends AppCompatActivity {
             input.setText("");
             equation=input.getText().toString().trim();
         }
-        input.append("1");
-    }
-
-    @OnClick(R.id.btn2)
-    public void twoClick() {
-        if(flagVariable==1){
-            equation=input.getText().toString().trim();
-            equation="";
-            input.setText(equation);
-            flagVariable=0;
-        }
-        if(input.getText().toString().trim().equals("0")){
-            input.setText("");
-            equation=input.getText().toString().trim();
-        }
-        input.append("2");
-    }
-
-    @OnClick(R.id.btn3)
-    public void threeClick() {
-        if(flagVariable==1){
-            equation=input.getText().toString().trim();
-            equation="";
-            input.setText(equation);
-            flagVariable=0;
-        }
-        if(input.getText().toString().trim().equals("0")){
-            input.setText("");
-            equation=input.getText().toString().trim();
-        }
-        input.append("3");
-    }
-
-    @OnClick(R.id.btn4)
-    public void fourClick() {
-        if(flagVariable==1){
-            equation=input.getText().toString().trim();
-            equation="";
-            input.setText(equation);
-            flagVariable=0;
-        }
-        if(input.getText().toString().trim().equals("0")){
-            input.setText("");
-            equation=input.getText().toString().trim();
-        }
-        input.append("4");
-    }
-
-    @OnClick(R.id.btn5)
-    public void fiveClick() {
-        if(flagVariable==1){
-            equation=input.getText().toString().trim();
-            equation="";
-            input.setText(equation);
-            flagVariable=0;
-        }
-        if(input.getText().toString().trim().equals("0")){
-            input.setText("");
-            equation=input.getText().toString().trim();
-        }
-        input.append("5");
-    }
-
-    @OnClick(R.id.btn6)
-    public void sixClick() {
-        if(flagVariable==1){
-            equation=input.getText().toString().trim();
-            equation="";
-            input.setText(equation);
-            flagVariable=0;
-        }
-        if(input.getText().toString().trim().equals("0")){
-            input.setText("");
-            equation=input.getText().toString().trim();
-        }
-        input.append("6");
-    }
-
-    @OnClick(R.id.btn7)
-    public void sevenClick() {
-        if(flagVariable==1){
-            equation=input.getText().toString().trim();
-            equation="";
-            input.setText(equation);
-            flagVariable=0;
-        }
-        if(input.getText().toString().trim().equals("0")){
-            input.setText("");
-            equation=input.getText().toString().trim();
-        }
-        input.append("7");
-    }
-
-    @OnClick(R.id.btn8)
-    public void eightClick() {
-        if(flagVariable==1){
-            equation=input.getText().toString().trim();
-            equation="";
-            input.setText(equation);
-            flagVariable=0;
-        }
-        if(input.getText().toString().trim().equals("0")){
-            input.setText("");
-            equation=input.getText().toString().trim();
-        }
-        input.append("8");
-    }
-
-    @OnClick(R.id.btn9)
-    public void nineClick() {
-        if(flagVariable==1){
-            equation=input.getText().toString().trim();
-            equation="";
-            input.setText(equation);
-            flagVariable=0;
-        }
-        if(input.getText().toString().trim().equals("0")){
-            input.setText("");
-            equation=input.getText().toString().trim();
-        }
-        input.append("9");
-    }
-
-    @OnClick(R.id.btn0)
-    public void zeroClick() {
-        if(flagVariable==1){
-            equation=input.getText().toString().trim();
-            equation="";
-            input.setText(equation);
-            flagVariable=0;
-        }
-        if(input.getText().toString().trim().equals("0")){
-            input.setText("");
-            equation=input.getText().toString().trim();
-        }
-        input.append("0");
+        input.append(String.valueOf(number));
     }
 
     @OnClick(R.id.btnbackspace)
     public void backspaceClick() {
-        equation=input.getText().toString().trim();
-        int equationLength=equation.length();
-        if(equationLength<=1){
+        equation = input.getText().toString().trim();
+        int equationLength = equation.length();
+        if (equationLength <= 1 || equation.equals("0")) {
             input.setText("");
             input.append("0");
-        }else {
-            if(equation.equals("0")){
+        } else {
+            if (flagVariable == 1) {
+                equation = input.getText().toString().trim();
+                equation = "";
+                input.setText(equation);
+            } else {
+                String newEquation = equation.substring(0, equationLength - 1);
+                equation = newEquation;
                 input.setText("");
-                input.append("0");
-            }else {
-                if(flagVariable==1){
-                    equation=input.getText().toString().trim();
-                    equation="";
-                    input.setText(equation);
-                }else {
-                    String newEquation = equation.substring(0, equationLength - 1);
-                    equation = newEquation;
-                    input.setText("");
-                    input.append(equation);
-                }
+                input.append(equation);
             }
+
         }
     }
 
@@ -309,131 +192,104 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @OnClick(R.id.equalFab)
-    public void equalFabClick(){// throws JSONException {
-        equation=input.getText().toString().trim();
-        //Check to see if right braces are closed
+    public boolean closeBraces() {
+        equation = input.getText().toString().trim();
         int counterLeftBrace = 0;
-        for( int i=0; i<equation.length(); i++ ) {
-            if( equation.charAt(i) == '(' ) {
+        for (int i = 0; i < equation.length(); i++) {
+            if (equation.charAt(i) == '(') {
                 counterLeftBrace++;
             }
         }
         int counterRightBrace = 0;
-        for( int i=0; i<equation.length(); i++ ) {
-            if( equation.charAt(i) == ')' ) {
+        for (int i = 0; i < equation.length(); i++) {
+            if (equation.charAt(i) == ')') {
                 counterRightBrace++;
             }
         }
-        if(counterRightBrace!=counterLeftBrace){
+        if (counterRightBrace != counterLeftBrace) {
             Toast toast = Toast.makeText(getApplicationContext(), "Please enter correct brace formatting.", Toast.LENGTH_LONG);
             toast.show();
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    public boolean endWithSymbol(){
+        if(equation.endsWith("+")||equation.endsWith("-")||equation.endsWith("*")||equation.endsWith("/")){
+            Toast toast = Toast.makeText(getApplicationContext(), "Please add a value after the symbol.", Toast.LENGTH_LONG);
+            toast.show();
+            return true;
         }else {
-            if(equation.endsWith("+")||equation.endsWith("-")||equation.endsWith("*")||equation.endsWith("/")){
-                Toast toast = Toast.makeText(getApplicationContext(), "Please add a value after the symbol.", Toast.LENGTH_LONG);
-                toast.show();
-            }else {
-                final String totalEq = equation;
-                equation = Calculator.total(equation);
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        AbstractEquationModel equationModel = realm.createObject(EquationModel.class);
-                        equationModel.setEquation(totalEq);
-                        equationModel.setAnswer(equation);
-                        equationModel.setNumberID(equationModel.getNumberID() + 1);
-                    }
-                });
+            return false;
+        }
+    }
 
-                /*
+    @OnClick(R.id.equalFab)
+    public void equalFabClick() {
+
+        if (closeBraces() == false && endWithSymbol() == false) {
+
+            final String totalEq = equation;
+            equation = Calculator.total(equation);
+            repository.insert(totalEq, equation);
+
+
                 EquationModel equationModel = new EquationModel();
                 equationModel.setEquation(totalEq);
                 equationModel.setAnswer(equation);
                 equationModel.setNumberID(equationModel.getNumberID() + 1);
-                JSONObject jEquations = new JSONObject(equationModel.toString());
-                JSONObject jAnswers = new JSONObject(equation);
-*/
-                sharedPreferenceEditor.putString(mEquation, totalEq);
-                sharedPreferenceEditor.putString(mAnswer, equation);
-                sharedPreferenceEditor.commit();
-                readSharedPreferences();
 
-                flagVariable = 1;
-                input.setText("");
-                input.append(equation);
-                totalEquation.setText(totalEq);
-            }
-        }
-    }
-/*
-    public void saveValues(Context context, List<EquationModel> Equations) {
-        SharedPreferences settings;
-        SharedPreferences.Editor editor;
-
-        settings = context.getSharedPreferences(myPrefs, Context.MODE_PRIVATE);
-        editor = settings.edit();
-
-        Gson gson = new Gson();
-        String equations = gson.toJson(Equations);
-
-        editor.putString(equation, equations);
-        editor.commit();
-    }
-
-    public ArrayList<EquationModel> getFavorites(Context context) {
-        SharedPreferences settings;
-        List<EquationModel> equations;
-
-        settings = context.getSharedPreferences(myPrefs, Context.MODE_PRIVATE);
-
-        if (settings.contains(equation)) {
-            String jsonFavorites = settings.getString(equation, null);
-            Gson gson = new Gson();
-            EquationModel[] favoriteItems = gson.fromJson(jsonFavorites, EquationModel[].class);
-
-            equations = Arrays.asList(favoriteItems);
-            equations = new ArrayList<EquationModel>(equations);
-        } else
-            return null;
-        return (ArrayList<EquationModel>) equations;
-    }
-
-/*
-    AbstractEquationModel abstractEquationModel = null;
-    public ArrayList<AbstractEquationModel> getJson(Context context, String category) {
-
-        String json;
-        JSONArray jPdtArray;
-
-        ArrayList<AbstractEquationModel> allValues = null;
-
-        sharedPreferenceEditor = context.getSharedPreferences(myPrefs, Context.MODE_PRIVATE);
-        json = sharedPreferencesEditor.getString("JSONString", null);
-
-        JSONObject jsonObj = null;
-        try {
-            if (json != null) {
-                jsonObj = new JSONObject(json);
-                jPdtArray = jsonObj.optJSONArray(category);
-                if (jPdtArray != null) {
-                    allValues = new ArrayList<>();
-                    for (int i = 0; i < jPdtArray.length(); i++) {
-                        EquationModel equationModel = new EquationModel();
-                        JSONObject pdtObj = jPdtArray.getJSONObject(i);
-                        abstractEquationModel.setName(pdtObj.getString("name"));
-                        abstractEquationModel.setId(pdtObj
-                                .getInt("id"));
-                        allValues.add(abstractEquationModel);
-                    }
+            List<EquationModel> savedList = getValues(MainActivity.this);
+            if (savedList != null) {
+                for (int i = 0; i<savedList.size() ; i++) {
+                    Log.v("FetchValues: ", " : "+savedList.get(i).getEquation());
                 }
-            }
-        } catch (JSONException e) {
+                savedList.add(equationModel);
+                saveValues(MainActivity.this, savedList);}
+
+            flagVariable = 1;
+            input.setText("");
+            input.append(equation);
+            totalEquation.setText(totalEq);
+
         }
-        return allValues;
     }
 
-*/
+
+        public void saveValues(Context context, List<EquationModel> Equations) {
+            SharedPreferences settings;
+            SharedPreferences.Editor editor;
+
+            settings = context.getSharedPreferences(myPrefs, Context.MODE_PRIVATE);
+            editor = settings.edit();
+
+            Gson gson = new Gson();
+            String equations = gson.toJson(Equations);
+
+            editor.putString(mEquation, equations);
+            editor.commit();
+        }
+
+        public ArrayList<EquationModel> getValues(Context context) {
+            SharedPreferences settings;
+            List<EquationModel> equations;
+
+            settings = context.getSharedPreferences(myPrefs, Context.MODE_PRIVATE);
+
+            if (settings.contains(mEquation)) {
+                String jsonFavorites = settings.getString(mEquation, null);
+                Gson gson = new Gson();
+                EquationModel[] favoriteItems = gson.fromJson(jsonFavorites, EquationModel[].class);
+
+                equations = Arrays.asList(favoriteItems);
+                equations = new ArrayList<EquationModel>(equations);
+            } else
+                return new ArrayList<>();
+            return (ArrayList<EquationModel>) equations;
+        }
+
+
     public void readSharedPreferences(){
         String shPreEquation = sharedpreferences.getString(mEquation, "");
         String shPreAnswer = sharedpreferences.getString(mAnswer, "");
@@ -444,19 +300,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_view_history) {
             startActivity(new Intent(MainActivity.this, ViewHistoryActivity.class));
             return true;
