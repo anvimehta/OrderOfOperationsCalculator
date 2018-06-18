@@ -1,8 +1,9 @@
-package edu.purdue.mehta109.trialanderror;
+package edu.purdue.mehta109.trialanderror.Model.Realm;
 
+import edu.purdue.mehta109.trialanderror.Model.AbstractEquationModel;
 import io.realm.RealmObject;
 
-public class EquationModel extends RealmObject implements AbstractEquationModel{
+public class EquationModel extends RealmObject implements AbstractEquationModel {
 
     private long numberID;
     private String eq;
@@ -30,10 +31,5 @@ public class EquationModel extends RealmObject implements AbstractEquationModel{
 
     public void setAnswer(String answer) {
         this.answer = answer;
-    }
-
-    @Override
-    public void saveLocally() {
-
     }
 }

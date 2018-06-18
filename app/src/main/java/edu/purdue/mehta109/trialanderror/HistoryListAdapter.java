@@ -10,12 +10,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import edu.purdue.mehta109.trialanderror.Model.AbstractEquationModel;
 
 public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.MyViewHolder> {
 
-    private List<EquationModel> mEquationModelList;
+    private List<AbstractEquationModel> mEquationModelList;
 
-    public HistoryListAdapter(List<EquationModel> mEquationModelList) {
+    public HistoryListAdapter(List<AbstractEquationModel> mEquationModelList) {
         this.mEquationModelList = mEquationModelList;
     }
 

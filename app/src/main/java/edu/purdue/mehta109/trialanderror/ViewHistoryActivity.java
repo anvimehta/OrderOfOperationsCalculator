@@ -1,7 +1,5 @@
 package edu.purdue.mehta109.trialanderror;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,16 +11,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.Realm;
-import io.realm.RealmResults;
+import edu.purdue.mehta109.trialanderror.Model.AbstractEquationModel;
+import edu.purdue.mehta109.trialanderror.Model.AbstractEquationRepository;
 
 public class ViewHistoryActivity extends AppCompatActivity {
 
+    private AbstractEquationRepository repository;
 
     @BindView(R.id.recycler_view_history)
     protected RecyclerView mRecyclerViewHistory;
-
-    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +29,11 @@ public class ViewHistoryActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        realm = Realm.getDefaultInstance();
+        repository = RepositoryManager.getEquationRepository();
         fetchHistoryFromRealm();
     }
 
-    private void setHistoryListAdapter(List<EquationModel> equationModelList) {
+    private void setHistoryListAdapter(List<AbstractEquationModel> equationModelList) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager
                 .VERTICAL, false);
         mRecyclerViewHistory.setLayoutManager(linearLayoutManager);
@@ -44,13 +41,11 @@ public class ViewHistoryActivity extends AppCompatActivity {
     }
 
     private void fetchHistoryFromRealm() {
-        RealmResults<EquationModel> historyList = realm.where(EquationModel.class).findAll();
+        List<AbstractEquationModel> historyList = repository.getAll();
         if (historyList != null && historyList.size() > 0) {
             setHistoryListAdapter(historyList);
         }
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
