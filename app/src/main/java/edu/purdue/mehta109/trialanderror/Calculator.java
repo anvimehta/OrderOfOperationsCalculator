@@ -71,7 +71,7 @@ public class Calculator {
     }
     public static String bugFix(String eq){
         flag = 0;
-        System.out.println("Enter an expression:");
+        //System.out.println("Enter an expression:");
         Scanner scanner = new Scanner(System.in);
         String input=eq;
         if(input.charAt(0)=='-'){
