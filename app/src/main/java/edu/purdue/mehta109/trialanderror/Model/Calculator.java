@@ -1,4 +1,4 @@
-package edu.purdue.mehta109.trialanderror;
+package edu.purdue.mehta109.trialanderror.Model;
 
 import java.util.Stack;
 import java.util.Scanner;

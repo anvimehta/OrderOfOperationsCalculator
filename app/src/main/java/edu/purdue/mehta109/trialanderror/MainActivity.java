@@ -1,8 +1,6 @@
 package edu.purdue.mehta109.trialanderror;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +17,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 import edu.purdue.mehta109.trialanderror.Model.AbstractEquationRepository;
+import edu.purdue.mehta109.trialanderror.Model.Calculator;
 import edu.purdue.mehta109.trialanderror.Model.Realm.RealmEquationModel;
+import edu.purdue.mehta109.trialanderror.Model.RepositoryManager;
 import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,12 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private AbstractEquationRepository repository;
     List<RealmEquationModel> list;
 
-    public static final String myPrefs = "myPrefs" ;
-    public static final String mEquation = "equationKey";
-    public static final String mAnswer = "answerKey";
-    SharedPreferences sharedpreferences;
-    SharedPreferences.Editor sharedPreferenceEditor;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
         Toolbar mToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        sharedpreferences = getSharedPreferences(myPrefs, Context.MODE_PRIVATE);
-        sharedPreferenceEditor = sharedpreferences.edit();
         repository = RepositoryManager.getEquationRepository();
     }
 
@@ -257,6 +249,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 
 }

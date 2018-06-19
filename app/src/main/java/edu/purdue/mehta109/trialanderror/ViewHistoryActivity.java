@@ -13,6 +13,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import edu.purdue.mehta109.trialanderror.Model.AbstractEquationModel;
 import edu.purdue.mehta109.trialanderror.Model.AbstractEquationRepository;
+import edu.purdue.mehta109.trialanderror.Model.HistoryListAdapter;
+import edu.purdue.mehta109.trialanderror.Model.RepositoryManager;
 
 public class ViewHistoryActivity extends AppCompatActivity {
 
