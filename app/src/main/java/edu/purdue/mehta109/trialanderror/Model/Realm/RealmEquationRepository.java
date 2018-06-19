@@ -20,7 +20,7 @@ public class RealmEquationRepository implements AbstractEquationRepository
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                AbstractEquationModel equationModel = realm.createObject(EquationModel.class);
+                AbstractEquationModel equationModel = realm.createObject(RealmEquationModel.class);
                 equationModel.setEquation(equation);
                 equationModel.setAnswer(answer);
                 equationModel.setNumberID(getLastId() + 1);
@@ -30,7 +30,7 @@ public class RealmEquationRepository implements AbstractEquationRepository
 
     @Override
     public List<AbstractEquationModel> getAll() {
-        RealmResults<EquationModel> historyList = realm.where(EquationModel.class).findAll();
+        RealmResults<RealmEquationModel> historyList = realm.where(RealmEquationModel.class).findAll();
         List<AbstractEquationModel> list = new ArrayList<>();
         list.addAll(historyList);
         return list;

@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 import edu.purdue.mehta109.trialanderror.Model.AbstractEquationRepository;
-import edu.purdue.mehta109.trialanderror.Model.Realm.EquationModel;
+import edu.purdue.mehta109.trialanderror.Model.Realm.RealmEquationModel;
 import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private Realm realm;
 
     private AbstractEquationRepository repository;
-    List<EquationModel> list;
+    List<RealmEquationModel> list;
 
     public static final String myPrefs = "myPrefs" ;
     public static final String mEquation = "equationKey";
@@ -137,8 +137,7 @@ public class MainActivity extends AppCompatActivity {
     public void oneClick(View view) {
         int number = -1;
         int [] numberIds = {R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9};
-        for(int i=0;i<numberIds.length;i++)
-        {
+        for(int i=0;i<numberIds.length;i++) {
             if(view.getId() == numberIds[i])
             {
                 number = i;
@@ -241,18 +240,19 @@ public class MainActivity extends AppCompatActivity {
             repository.insert(totalEq, equation);
 
 
-                EquationModel equationModel = new EquationModel();
-                equationModel.setEquation(totalEq);
-                equationModel.setAnswer(equation);
-                equationModel.setNumberID(equationModel.getNumberID() + 1);
+            RealmEquationModel equationModel = new RealmEquationModel();
+            equationModel.setEquation(totalEq);
+            equationModel.setAnswer(equation);
+            equationModel.setNumberID(equationModel.getNumberID() + 1);
 
-            List<EquationModel> savedList = getValues(MainActivity.this);
+            List<RealmEquationModel> savedList = getValues(MainActivity.this);
             if (savedList != null) {
-                for (int i = 0; i<savedList.size() ; i++) {
-                    Log.v("FetchValues: ", " : "+savedList.get(i).getEquation());
+                for (int i = 0; i < savedList.size(); i++) {
+                    Log.v("FetchValues: ", " : " + savedList.get(i).getEquation());
                 }
                 savedList.add(equationModel);
-                saveValues(MainActivity.this, savedList);}
+                saveValues(MainActivity.this, savedList);
+            }
 
             flagVariable = 1;
             input.setText("");
@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-        public void saveValues(Context context, List<EquationModel> Equations) {
+        public void saveValues(Context context, List<RealmEquationModel> Equations) {
             SharedPreferences settings;
             SharedPreferences.Editor editor;
 
@@ -277,22 +277,22 @@ public class MainActivity extends AppCompatActivity {
             editor.commit();
         }
 
-        public ArrayList<EquationModel> getValues(Context context) {
+        public ArrayList<RealmEquationModel> getValues(Context context) {
             SharedPreferences settings;
-            List<EquationModel> equations;
+            List<RealmEquationModel> equations;
 
             settings = context.getSharedPreferences(myPrefs, Context.MODE_PRIVATE);
 
             if (settings.contains(mEquation)) {
                 String jsonFavorites = settings.getString(mEquation, null);
                 Gson gson = new Gson();
-                EquationModel[] favoriteItems = gson.fromJson(jsonFavorites, EquationModel[].class);
+                RealmEquationModel[] favoriteItems = gson.fromJson(jsonFavorites, RealmEquationModel[].class);
 
                 equations = Arrays.asList(favoriteItems);
-                equations = new ArrayList<EquationModel>(equations);
+                equations = new ArrayList<RealmEquationModel>(equations);
             } else
                 return new ArrayList<>();
-            return (ArrayList<EquationModel>) equations;
+            return (ArrayList<RealmEquationModel>) equations;
         }
 
 
