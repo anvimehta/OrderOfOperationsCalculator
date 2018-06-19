@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String equation;
 
-    private int flagVariable=0;
+    private int flagVariable = 0;
 
     private Realm realm;
 
@@ -46,76 +46,75 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         equation = input.getText().toString().trim();
         realm = Realm.getDefaultInstance();
-        Toolbar mToolbar = (Toolbar)findViewById(R.id.toolbar);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         repository = RepositoryManager.getEquationRepository();
     }
 
-
     @OnClick(R.id.btnleftbrace)
     public void leftBraceClick() {
-        if(flagVariable==1){
-            flagVariable=0;
+        if (flagVariable == 1) {
+            flagVariable = 0;
         }
-        if(input.getText().toString().trim().equals("0")){
+        if (input.getText().toString().trim().equals("0")) {
             input.setText("");
-            equation=input.getText().toString().trim();
+            equation = input.getText().toString().trim();
         }
         input.append("(");
     }
 
     @OnClick(R.id.btnrightbrace)
     public void rightBraceClick() {
-        if(flagVariable==1){
-            flagVariable=0;
+        if (flagVariable == 1) {
+            flagVariable = 0;
         }
-        if(input.getText().toString().trim().equals("0")){
+        if (input.getText().toString().trim().equals("0")) {
             input.setText("");
-            equation=input.getText().toString().trim();
+            equation = input.getText().toString().trim();
         }
         input.append(")");
     }
 
     @OnClick(R.id.btndivide)
     public void divideClick() {
-        if(flagVariable==1){
-            flagVariable=0;
+        if (flagVariable == 1) {
+            flagVariable = 0;
         }
         input.append("/");
     }
 
     @OnClick(R.id.btnmultiply)
     public void multiplyClick() {
-        if(flagVariable==1){
-            flagVariable=0;
+        if (flagVariable == 1) {
+            flagVariable = 0;
         }
-        if(input.getText().toString().trim().equals("0")){
+        if (input.getText().toString().trim().equals("0")) {
             input.setText("");
-            equation=input.getText().toString().trim();
+            equation = input.getText().toString().trim();
         }
         input.append("*");
     }
 
     @OnClick(R.id.btnadd)
     public void subtractClick() {
-        if(flagVariable==1){
-            flagVariable=0;
+        if (flagVariable == 1) {
+            flagVariable = 0;
         }
-        if(input.getText().toString().trim().equals("0")){
+        if (input.getText().toString().trim().equals("0")) {
             input.setText("");
-            equation=input.getText().toString().trim();
+            equation = input.getText().toString().trim();
         }
         input.append("+");
     }
 
     @OnClick(R.id.btnsubtract)
     public void addClick() {
-        if(flagVariable==1){
-            flagVariable=0;
+        if (flagVariable == 1) {
+            flagVariable = 0;
         }
-        if(input.getText().toString().trim().equals("0")){
+        if (input.getText().toString().trim().equals("0")) {
             input.setText("");
-            equation=input.getText().toString().trim();
+            equation = input.getText().toString().trim();
         }
         input.append("-");
     }
@@ -123,26 +122,24 @@ public class MainActivity extends AppCompatActivity {
     @OnClick({R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9})
     public void oneClick(View view) {
         int number = -1;
-        int [] numberIds = {R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9};
-        for(int i=0;i<numberIds.length;i++) {
-            if(view.getId() == numberIds[i])
-            {
+        int[] numberIds = {R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9};
+        for (int i = 0; i < numberIds.length; i++) {
+            if (view.getId() == numberIds[i]) {
                 number = i;
             }
         }
-        if(number == -1)
-        {
+        if (number == -1) {
             throw new RuntimeException("Something went horribly wrong!");
         }
-        if(flagVariable==1){
-            equation=input.getText().toString().trim();
-            equation="";
+        if (flagVariable == 1) {
+            equation = input.getText().toString().trim();
+            equation = "";
             input.setText(equation);
-            flagVariable=0;
+            flagVariable = 0;
         }
-        if(input.getText().toString().trim().equals("0")){
+        if (input.getText().toString().trim().equals("0")) {
             input.setText("");
-            equation=input.getText().toString().trim();
+            equation = input.getText().toString().trim();
         }
         input.append(String.valueOf(number));
     }
@@ -170,9 +167,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnLongClick(R.id.btnbackspace)
-    public boolean longBackspaceClick(){
-        equation=input.getText().toString().trim();
-        equation="";
+    public boolean longBackspaceClick() {
+        equation = input.getText().toString().trim();
+        equation = "";
         input.setText(equation);
         input.append("0");
         return true;
@@ -202,17 +199,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void noEquation() {
-        if (equation.equals("")){
+        if (equation.equals("")) {
             input.append("0");
         }
     }
 
-    public boolean endWithSymbol(){
-        if(equation.endsWith("+")||equation.endsWith("-")||equation.endsWith("*")||equation.endsWith("/")){
+    public boolean endWithSymbol() {
+        if (equation.endsWith("+") || equation.endsWith("-") || equation.endsWith("*") || equation.endsWith("/")) {
             Toast toast = Toast.makeText(getApplicationContext(), "Please add a value after the symbol.", Toast.LENGTH_LONG);
             toast.show();
             return true;
-        }else {
+        } else {
             return false;
         }
     }
