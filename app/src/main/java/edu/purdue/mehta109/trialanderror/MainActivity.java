@@ -6,17 +6,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -234,75 +229,16 @@ public class MainActivity extends AppCompatActivity {
     public void equalFabClick() {
         noEquation();
         if (closeBraces() == false && endWithSymbol() == false) {
-
             final String totalEq = equation;
             equation = Calculator.total(equation);
             repository.insert(totalEq, equation);
-
-
             RealmEquationModel equationModel = new RealmEquationModel();
-            equationModel.setEquation(totalEq);
-            equationModel.setAnswer(equation);
-            equationModel.setNumberID(equationModel.getNumberID() + 1);
-
-            List<RealmEquationModel> savedList = getValues(MainActivity.this);
-            if (savedList != null) {
-                for (int i = 0; i < savedList.size(); i++) {
-                    Log.v("FetchValues: ", " : " + savedList.get(i).getEquation());
-                }
-                savedList.add(equationModel);
-                saveValues(MainActivity.this, savedList);
-            }
-
             flagVariable = 1;
             input.setText("");
             input.append(equation);
             totalEquation.setText(totalEq);
-
         }
     }
-
-
-        public void saveValues(Context context, List<RealmEquationModel> Equations) {
-            SharedPreferences settings;
-            SharedPreferences.Editor editor;
-
-            settings = context.getSharedPreferences(myPrefs, Context.MODE_PRIVATE);
-            editor = settings.edit();
-
-            Gson gson = new Gson();
-            String equations = gson.toJson(Equations);
-
-            editor.putString(mEquation, equations);
-            editor.commit();
-        }
-
-        public ArrayList<RealmEquationModel> getValues(Context context) {
-            SharedPreferences settings;
-            List<RealmEquationModel> equations;
-
-            settings = context.getSharedPreferences(myPrefs, Context.MODE_PRIVATE);
-
-            if (settings.contains(mEquation)) {
-                String jsonFavorites = settings.getString(mEquation, null);
-                Gson gson = new Gson();
-                RealmEquationModel[] favoriteItems = gson.fromJson(jsonFavorites, RealmEquationModel[].class);
-
-                equations = Arrays.asList(favoriteItems);
-                equations = new ArrayList<RealmEquationModel>(equations);
-            } else
-                return new ArrayList<>();
-            return (ArrayList<RealmEquationModel>) equations;
-        }
-
-
-    public void readSharedPreferences(){
-        String shPreEquation = sharedpreferences.getString(mEquation, "");
-        String shPreAnswer = sharedpreferences.getString(mAnswer, "");
-        Log.v("Equation :", shPreEquation);
-        Log.v("Answer   :", shPreAnswer);
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
